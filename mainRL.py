@@ -8,6 +8,10 @@ Created on Thu Oct 11 09:27:16 2018
 import numpy as np
 import RL as RL
 
+import timeit
+
+start = timeit.default_timer()
+
 print("exercicio 1")
 #exercise 1
 ## Env 1
@@ -35,9 +39,10 @@ absorv = np.zeros((7,1))
 absorv[[0,6]]=1
 fmdp = RL.finiteMDP(7,2,0.9,Pl,Rl,absorv)
 
-J,traj = fmdp.runPolicy( " choose this value ",3,poltype = "exploration")
+J,traj = fmdp.runPolicy(3000 ,3,poltype = "exploration")
 data = np.load("Q1.npz")
 Qr = fmdp.traces2Q(traj)
+a = data['Q1']
 if np.sqrt(sum(sum((data['Q1']-Qr)**2)))<1:
     print("Aproximação de Q dentro do previsto. OK\n")
 else:
@@ -59,4 +64,8 @@ if np.sqrt(sum(sum((data['Q']-q2)**2)))<1:
     print("Aproximação de Q dentro do previsto. OK\n")
 else:
     print("Aproximação de Q fora do previsto. FAILED\n")
-    
+
+stop = timeit.default_timer()
+
+print('Time: ', stop - start)
+

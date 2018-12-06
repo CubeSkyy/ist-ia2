@@ -2,6 +2,9 @@ import numpy as np
 import RL as RL
 
 print("exercicio 1")
+import timeit
+
+start = timeit.default_timer()
 #exercise 1
 ## Env 2
 # 0  1
@@ -43,7 +46,7 @@ absorv[-1]=1
 
 fmdp = RL.finiteMDP(4,4,0.9,Pl,Rl,absorv)
 
-J,traj = fmdp.runPolicy( 3000,0,poltype = "exploration")
+J,traj = fmdp.runPolicy(3000,0,poltype = "exploration")
 data = np.load("Q2.npz")
 Qr = fmdp.traces2Q(traj)
 if np.sqrt(sum(sum((data['Q1']-Qr)**2)))<1:
@@ -68,3 +71,7 @@ if np.sqrt(sum(sum((data['Q']-q2)**2)))<1:
 	print("Aproximação de Q dentro do previsto. OK\n")
 else:
 	print("Aproximação de Q fora do previsto. FAILED\n")
+
+stop = timeit.default_timer()
+
+print('Time: ', stop - start)

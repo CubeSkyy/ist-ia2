@@ -4,12 +4,13 @@ Created on Mon Oct 16 20:31:54 2017
 
 @author: mlopes
 """
+
 import numpy as np
 import random
 
 from tempfile import TemporaryFile
 outfile = TemporaryFile()
-	
+
 class finiteMDP:
 
     def __init__(self, nS, nA, gamma, P=[], R=[], absorv=[]):
@@ -21,7 +22,7 @@ class finiteMDP:
         self.R = R
         self.absorv = absorv
         # completar se necessario
-        
+        self.z =0
             
     def runPolicy(self, n, x0,  poltype = 'greedy', polpar=[]):
         #nao alterar
@@ -62,27 +63,40 @@ class finiteMDP:
 
             
     def traces2Q(self, trace):
-                # implementar esta funcao
-        
+
+        nQ = np.copy(self.Q)
+        alpha = 1
+
+        for i in range(0,1000):
+            for row in trace:
+                initialState = int(row[0])
+                action = int(row[1])
+                finalState = int(row[2])
+                reward = row[3]
+                a = self.Q[finalState]
+                nQ[initialState, action] = self.Q[initialState, action] + alpha * (reward + self.gamma * self.Q[finalState].max() - self.Q[initialState, action])
+
+            err = np.linalg.norm(self.Q - nQ)
+            self.Q = np.copy(nQ)
+            if err < 1e-4:
+                break
 
         return self.Q
-    
+
+
     def policy(self, x, poltype = 'exploration', par = []):
         # implementar esta funcao
         
         if poltype == 'exploitation':
-            pass
+            a = np.argmax(self.Q[x])
 
-            
         elif poltype == 'exploration':
-            pass
+            a = random.randint(0, self.nA -1)
 
-                
         return a
-    
+
     def Q2pol(self, Q, eta=5):
         # implementar esta funcao
         return np.exp(eta*Q)/np.dot(np.exp(eta*Q),np.array([[1,1],[1,1]]))
 
-
-            
+#########################################
