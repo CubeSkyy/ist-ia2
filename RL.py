@@ -32,6 +32,7 @@ class finiteMDP:
         for ii in range(0,n):
             a = self.policy(x,poltype,polpar)
             r = self.R[x,a]
+            c =  self.P[x,a,:]
             y = np.nonzero(np.random.multinomial( 1, self.P[x,a,:]))[0][0]
             traj[ii,:] = np.array([x, a, y, r])
             J = J + r * self.gamma**ii
@@ -90,7 +91,6 @@ class finiteMDP:
 
         elif poltype == 'exploration':
             a = random.randint(0, self.nA -1)
-
         return a
 
     def Q2pol(self, Q, eta=5):
