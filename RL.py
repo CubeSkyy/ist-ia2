@@ -21,7 +21,6 @@ class finiteMDP:
         self.P = P
         self.R = R
         self.absorv = absorv
-        self.count = 0
         # completar se necessario
         self.z =0
             
@@ -69,7 +68,6 @@ class finiteMDP:
         alpha = 0.2
 
         for i in range(0,1000):
-            self.count += 1
             for row in trace:
                 initialState = int(row[0])
                 action = int(row[1])
