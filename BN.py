@@ -1,11 +1,4 @@
-# -*- coding: utf-8 -*-
-"""
-Created on Mon Oct 15 15:51:49 2018
-
-@author: mlopes
-"""
-
-import numpy as np
+#Grupo: 21 Alunos: 87687 - Miguel Coelho; 87700 - Ricardo Silva
 
 class Node():
     def __init__(self, prob, parents = []):

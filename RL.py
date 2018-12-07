@@ -1,9 +1,5 @@
-# -*- coding: utf-8 -*-
-"""
-Created on Mon Oct 16 20:31:54 2017
+#Grupo: 21 Alunos: 87687 - Miguel Coelho; 87700 - Ricardo Silva
 
-@author: mlopes
-"""
 
 import numpy as np
 import random
@@ -21,8 +17,8 @@ class finiteMDP:
         self.P = P
         self.R = R
         self.absorv = absorv
-        # completar se necessario
         self.z =0
+        self.alpha = 0.2
             
     def runPolicy(self, n, x0,  poltype = 'greedy', polpar=[]):
         #nao alterar
@@ -64,9 +60,7 @@ class finiteMDP:
 
             
     def traces2Q(self, trace):
-
         nQ = np.zeros((self.nS,self.nA))
-        alpha = 0.2
 
         for i in range(0,1000):
             for row in trace:
@@ -74,7 +68,7 @@ class finiteMDP:
                 action = int(row[1])
                 finalState = int(row[2])
                 reward = row[3]
-                self.Q[initialState, action] += alpha * (reward + self.gamma * np.max(self.Q[finalState]) - self.Q[initialState, action])
+                self.Q[initialState, action] += self.alpha * (reward + self.gamma * np.max(self.Q[finalState]) - self.Q[initialState, action])
 
             if np.allclose(self.Q, nQ):
                 break
