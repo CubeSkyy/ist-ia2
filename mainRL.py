@@ -42,6 +42,7 @@ fmdp = RL.finiteMDP(7,2,0.9,Pl,Rl,absorv)
 J,traj = fmdp.runPolicy(3000 ,3,poltype = "exploration")
 data = np.load("Q1.npz")
 Qr = fmdp.traces2Q(traj)
+print("For: ", fmdp.count)
 a = data['Q1']
 if np.sqrt(sum(sum((data['Q1']-Qr)**2)))<1:
     print("Aproximação de Q dentro do previsto. OK\n")
@@ -66,6 +67,6 @@ else:
     print("Aproximação de Q fora do previsto. FAILED\n")
 
 stop = timeit.default_timer()
-
+print("For: ", fmdp.count)
 print('Time: ', stop - start)
 
